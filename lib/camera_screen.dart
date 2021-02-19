@@ -57,10 +57,10 @@ class _MyHomePageState  extends State<MyHomePage> {
              style: TextStyle(fontSize: 23.0
              ),
            ),
-           Text('Condinates: '+ _coordinates,
-             style: TextStyle(fontSize: 20.0
-             ),
-           ),
+          //  Text('Condinates: '+ _coordinates,
+          //    style: TextStyle(fontSize: 20.0
+          //    ),
+          //  ),
           Text('Time: ' + date.toString(),
             style: TextStyle(fontSize: 20.0
             ),

@@ -1,6 +1,6 @@
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
-import 'form.dart';
+import 'form_closing.dart';
 
 
 /// FormController is a class which does work of saving FeedbackForm in Google Sheets using

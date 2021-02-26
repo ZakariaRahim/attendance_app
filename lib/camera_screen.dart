@@ -1,150 +1,230 @@
-
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:io' as Io;
 import 'package:unique_id/unique_id.dart';
 import 'form.dart';
 import 'form_controller.dart';
 import 'package:geolocator/geolocator.dart';
 
-
-
-
 class MyHomePage extends StatefulWidget {
-
-
-  static const String id='camerascreen';
+  static const String id = 'camerascreen';
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState  extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> {
   final _formKey = GlobalKey<FormState>();
   String _locationMessage = "";
-  String _deviceId="Signature";
-  String _status="Status";
-  TextEditingController userName=new TextEditingController();
-  String _coordinates="Coordinate";
-  String date="Date and time";
-  final _scaffoldKey= GlobalKey<ScaffoldState>();
+  String _deviceId = "Signature";
+  String _status = "Status";
+  TextEditingController userName = new TextEditingController();
+  String _coordinates = "Coordinate";
+  String date = "Date and time";
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key:_scaffoldKey,
+      key: _scaffoldKey,
       appBar: AppBar(
+        centerTitle: true,
         title: Text('Attendance App'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+      body: Stack(
+        clipBehavior: Clip.hardEdge,
         children: [
-          SizedBox(height: 10.0,),
+          Container(
+            //  transform: Matrix4.rotationZ(5.0),
+            width: 500,
+            height: 1000,
+            color: Colors.red.shade400,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Morning Session',
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                
+                SizedBox(
+                    // height: 10.0,
+                    ),
+                // Row(children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal:10.0),
+                    child: Container(
+                      width: 400.0,
+                      height: 1.0,
+                      color: Colors.black,
+                    ),
+                  ),
+                   SizedBox(
+                    height: 10.0,
+                    ),
+                Container(
+                  margin: EdgeInsets.only(left:20.0),
+                  width: 270.0,
+                  child: TextField(
+                    
+                    style: TextStyle(color: Colors.white),
+                    textAlign: TextAlign.center,
+                    textCapitalization: TextCapitalization.characters,
+                    controller: userName,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        fillColor: Colors.white,
+                        hintText: 'Enter Your Full Name',
+                        hintStyle: TextStyle(color: Colors.white)),
+                  ),
+                ),
 
-          // Text('Device Id: ' + _deviceId),
-          SizedBox(
-            height: 10.0,
-          ),
-         // Row(children: [
-            TextField(
-               controller: userName,
-               decoration: const InputDecoration(
-                 hintText: 'Enter Your Full Name',
-               ),
-
-             ),
-
-           Text('Status:'+ _status,
-             style: TextStyle(fontSize: 23.0
-             ),
-           ),
-          //  Text('Condinates: '+ _coordinates,
-          //    style: TextStyle(fontSize: 20.0
-          //    ),
-          //  ),
-          Text('Time: ' + date.toString(),
-            style: TextStyle(fontSize: 20.0
+                Text(
+                  'Status:' + _status,
+                  style: TextStyle(
+                    fontSize: 23.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                //  Text('Condinates: '+ _coordinates,
+                //    style: TextStyle(fontSize: 20.0
+                //    ),
+                //  ),
+                Text(
+                  'Time: ' + date.toString(),
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  'Signature: ' + _deviceId.toString(),
+                  style: TextStyle(
+                    fontSize: 22.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                RaisedButton(
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  onPressed: getUserDetails,
+                  child: Text('Generate'),
+                ),
+                RaisedButton(
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  onPressed: _submitForm,
+                  child: Text('Submit Attendance'),
+                ),
+                // RaisedButton(
+                //   color: Colors.blue,
+                //   textColor: Colors.white,
+                //   onPressed:exit(0),
+                //   child: Text('Close'),
+                // ),
+              ],
             ),
           ),
-           Text('Signature: ' + _deviceId.toString(),
-             style: TextStyle(fontSize: 22.0
-             ),
-           ),
 
-         // ],
-         // ),
-
-          RaisedButton(
+          Container(
+            transform: Matrix4.rotationZ(5.0),
+            width: 500,
+            height: 600,
             color: Colors.blue,
-            textColor: Colors.white,
-            onPressed:getUserDetails,
-            child: Text('Generate'),
+             child:  Image.asset(     
+                'images/attend.png',
+                fit: BoxFit.contain,
+               width: 50.0,
+                height: 50.0,
+              ),
           ),
-          RaisedButton(
+          Container(
+            width: 50,
+            height: 1000,
             color: Colors.blue,
-            textColor: Colors.white,
-            onPressed:_submitForm,
-            child: Text('Submit Attendance'),
           ),
-          // RaisedButton(
-          //   color: Colors.blue,
-          //   textColor: Colors.white,
-          //   onPressed:exit(0),
-          //   child: Text('Close'),
-          // ),
+          //   SizedBox(height: 10.0,),
 
+          //  // ],
+          //  // ),
         ],
       ),
+     floatingActionButton: FloatingActionButton(onPressed: (){
+    
 
+       if(Platform.isAndroid){
+         SystemNavigator.pop();
+       }else{
+        SystemChannels.platform.invokeMethod('SystemNavigator.pop()');
+       }
+     },
+     child:Icon(Icons.close)
+     ),
     );
   }
 
   void getUserDetails() async {
     // LocationPermission permission = await Geolocator.requestPermission();
-    final position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+    final position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best);
     _locationMessage = "${position.latitude}, ${position.longitude}";
-    if(_deviceId !=null && _coordinates !=null) {
-      setState(()  {
-
-       // if(position.latitude < 9.3873267 && position.longitude<-0.899183 ){
-       //   _status = "Out of Range";
-       // } else if(position.latitude>9.3873267 && position.longitude>-0.8989183){
-       //   _status="Out of Range";
-       // }else{
-       //   _status="Within Range";
-       // }
-        if(position.latitude<=9.3799617 && position.latitude > 9.3699617  && position.latitude <9.3801709){
-          _status="Within Range";
-        } else{
-          _status="Out of Range";
+    if (_deviceId != null && _coordinates != null) {
+      setState(() {
+        // if(position.latitude < 9.3873267 && position.longitude<-0.899183 ){
+        //   _status = "Out of Range";
+        // } else if(position.latitude>9.3873267 && position.longitude>-0.8989183){
+        //   _status="Out of Range";
+        // }else{
+        //   _status="Within Range";
+        // }
+        if (position.latitude <= 9.3799617 &&
+            position.latitude > 9.3699617 &&
+            position.latitude < 9.3801709) {
+          _status = "Within Range";
+        } else {
+          _status = "Out of Range";
         }
         _coordinates = _locationMessage;
         var currentDay = new DateTime.now();
-        date = currentDay.day.toString() + ' /' +
-            currentDay.month.toString() + ' / ' +
-            currentDay.year.toString() + ': ' +"   " +
-            currentDay.hour.toString() +  ': ' +
-            currentDay.minute.toString() + ":" +
+        date = currentDay.day.toString() +
+            ' /' +
+            currentDay.month.toString() +
+            ' / ' +
+            currentDay.year.toString() +
+            ': ' +
+            "   " +
+            currentDay.hour.toString() +
+            ': ' +
+            currentDay.minute.toString() +
+            ":" +
             currentDay.second.toString();
-
-
       });
-      _deviceId= await UniqueId.getID;
+      _deviceId = await UniqueId.getID;
     }
   }
 
   void _submitForm() {
     // Validate returns true if the form is valid, or false
     // otherwise.
-    if (_deviceId !=null) {
+    if (_deviceId != null) {
       // If the form is valid, proceed.
       FeedbackForm feedbackForm = FeedbackForm(
-        //SUBMITTING USER DETAILS
+          //SUBMITTING USER DETAILS
           userName.text,
           _status.toString(),
           _coordinates.toString(),
           date.toString(),
-          _deviceId.toString()
-      );
+          _deviceId.toString());
       FormController formController = FormController();
 
       _showSnackbar("Submitting...");
@@ -169,6 +249,4 @@ class _MyHomePageState  extends State<MyHomePage> {
     final snackBar = SnackBar(content: Text(message));
     _scaffoldKey.currentState.showSnackBar(snackBar);
   }
-  }
-
-
+}

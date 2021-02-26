@@ -102,20 +102,27 @@ class _MyHomePage2State  extends State<MyHomePage2> {
                 //    style: TextStyle(fontSize: 20.0
                 //    ),
                 //  ),
-                Text(
-                  'Time: ' + date.toString(),
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                Container(
+                    margin: EdgeInsets.only(left:20.0),
+                  child: Text(
+                    'Time: ' + date.toString(),
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                Text(
-                  'Signature: ' + _deviceId.toString(),
-                  style: TextStyle(
-                    fontSize: 22.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                Container(
+                    margin: EdgeInsets.only(left:45.0),
+                  child: Text(
+                    
+                    'Signature: ' +  _deviceId.toString(),
+                    style: TextStyle(
+                      fontSize: 22.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 RaisedButton(
@@ -174,15 +181,11 @@ class _MyHomePage2State  extends State<MyHomePage2> {
     if(_deviceId !=null && _coordinates !=null) {
       setState(()  {
 
-       // if(position.latitude < 9.3873267 && position.longitude<-0.899183 ){
-       //   _status = "Out of Range";
-       // } else if(position.latitude>9.3873267 && position.longitude>-0.8989183){
-       //   _status="Out of Range";
-       // }else{
-       //   _status="Within Range";
-       // }
       
-        if(position.latitude<=9.3799617 && position.latitude > 9.3699617  && position.latitude <9.3801709){
+        if(
+           position.latitude > 9.37899617 &&
+            position.latitude < 9.3799527)
+        {
           _status="Within Range";
         } else{
           _status="Out of Range";

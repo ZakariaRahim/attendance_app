@@ -94,24 +94,31 @@ class _MyHomePageState extends State<MyHomePage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                
                 //  Text('Condinates: '+ _coordinates,
                 //    style: TextStyle(fontSize: 20.0
                 //    ),
                 //  ),
-                Text(
-                  'Time: ' + date.toString(),
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                Container(
+                    margin: EdgeInsets.only(left:30.0),
+                  child: Text(
+                    'Time: ' + date.toString(),
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                Text(
-                  'Signature: ' + _deviceId.toString(),
-                  style: TextStyle(
-                    fontSize: 22.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                Container(
+                    margin: EdgeInsets.only(left:45.0),
+                  child: Text(
+                    ('Signature: ' + _deviceId.toString()),
+                    style: TextStyle(
+                      fontSize: 22.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 RaisedButton(
@@ -126,12 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: _submitForm,
                   child: Text('Submit Attendance'),
                 ),
-                // RaisedButton(
-                //   color: Colors.blue,
-                //   textColor: Colors.white,
-                //   onPressed:exit(0),
-                //   child: Text('Close'),
-                // ),
+            
               ],
             ),
           ),
@@ -187,9 +189,9 @@ class _MyHomePageState extends State<MyHomePage> {
         // }else{
         //   _status="Within Range";
         // }
-        if (position.latitude <= 9.3799617 &&
-            position.latitude > 9.3699617 &&
-            position.latitude < 9.3801709) {
+        if (
+            position.latitude > 9.37899617 &&
+            position.latitude < 9.3799527) {
           _status = "Within Range";
         } else {
           _status = "Out of Range";
